@@ -44,7 +44,7 @@ function newData() {
 			membersAllowed: membersAllowed,
 		};
 		try {
-			// await DataService.addEvent(newEvent, '');
+			await DataService.addEvent(newEvent, '');
 		} catch (error) {
 			console.log(error);
 		}
