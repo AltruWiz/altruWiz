@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Confetti from 'react-dom-confetti';
-import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
+import {
+	CircularProgressbarWithChildren,
+	buildStyles,
+} from 'react-circular-progressbar';
 import { firestore } from '../../firebase-config';
 import DataService from '../../firebase/services';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
@@ -38,18 +41,22 @@ function Achievements() {
 	};
 
 	useEffect(() => {
+		console.log('reading data Achievements');
 		onSnapshot(collection(firestore, 'events'), (snapshot) => {
 			setEventList(snapshot.docs.map((docEach) => docEach.data()));
 		});
 		user &&
-			onSnapshot(query(collection(firestore, 'user'), where('email', '==', user.email)), (snapshot) => {
-				setUserRank(snapshot.docs.at(0).data().rank);
-				setExpCurrent(snapshot.docs.at(0).data().expTotal);
-				setMyEvents(snapshot.docs.at(0).data().eventsJoined);
-				setMyBadges(snapshot.docs.at(0).data().badgesCollected);
-				getTableDetails(snapshot.docs.at(0).data().eventsJoined);
-				getRankDetails(snapshot.docs.at(0).data());
-			});
+			onSnapshot(
+				query(collection(firestore, 'user'), where('email', '==', user.email)),
+				(snapshot) => {
+					setUserRank(snapshot.docs.at(0).data().rank);
+					setExpCurrent(snapshot.docs.at(0).data().expTotal);
+					setMyEvents(snapshot.docs.at(0).data().eventsJoined);
+					setMyBadges(snapshot.docs.at(0).data().badgesCollected);
+					getTableDetails(snapshot.docs.at(0).data().eventsJoined);
+					getRankDetails(snapshot.docs.at(0).data());
+				}
+			);
 	}, [isUpdated]);
 
 	const getTableDetails = async (joinedEvents: any) => {
@@ -80,7 +87,11 @@ function Achievements() {
 	};
 
 	//Check update rank still needs to be fixed
-	const checkUpdateRank = async (expCurr: any, expNeeded: any, rankCurr: any) => {
+	const checkUpdateRank = async (
+		expCurr: any,
+		expNeeded: any,
+		rankCurr: any
+	) => {
 		let newRank = rankCurr;
 		if (expCurr >= 1000000) {
 			setIsMaxed(true);
@@ -128,7 +139,7 @@ function Achievements() {
 			{
 				rank: newRank,
 			},
-			user.uid,
+			user.uid
 		).then(() => setRank(newRank));
 	};
 
@@ -140,7 +151,11 @@ function Achievements() {
 
 	return (
 		<ScrollTop>
-			<RankUp showModal={showModal} setShowModal={setShowModal} rank={rank || userRank} />
+			<RankUp
+				showModal={showModal}
+				setShowModal={setShowModal}
+				rank={rank || userRank}
+			/>
 			<div className='achievements'>
 				<Confetti active={showModal} config={config} />
 				<div id='locator' />
@@ -170,12 +185,17 @@ function Achievements() {
 										backgroundColor: '#3e98c7',
 									})}
 									value={(expCurrent * 100) / expReq}
-									className='achievements-body-row1-col2-bar-icon'>
+									className='achievements-body-row1-col2-bar-icon'
+								>
 									{isMaxed ? (
-										<h1 className='achievements-body-row1-col2-bar-icon-label1'>Maxed</h1>
+										<h1 className='achievements-body-row1-col2-bar-icon-label1'>
+											Maxed
+										</h1>
 									) : (
 										<>
-											<h1 className='achievements-body-row1-col2-bar-icon-label1'>{expCurrent}</h1>
+											<h1 className='achievements-body-row1-col2-bar-icon-label1'>
+												{expCurrent}
+											</h1>
 											<h1 className='achievements-body-row1-col2-bar-icon-label2'>{`of ${expReq}`}</h1>
 										</>
 									)}
@@ -189,36 +209,59 @@ function Achievements() {
 									{myEvents.length < 10 ? '0' : ''}
 									{myEvents.length}
 								</h1>
-								<h1 className='achievements-body-row1-col3-section1-text'>EVENTS JOINED</h1>
+								<h1 className='achievements-body-row1-col3-section1-text'>
+									EVENTS JOINED
+								</h1>
 							</div>
 							<div className='achievements-body-row1-col3-section2'>
 								<h1 className='achievements-body-row1-col3-section2-number'>
 									{myBadges.length < 10 ? '0' : ''}
 									{myBadges.length}
 								</h1>
-								<h1 className='achievements-body-row1-col3-section2-text'>BADGES OBTAINED</h1>
+								<h1 className='achievements-body-row1-col3-section2-text'>
+									BADGES OBTAINED
+								</h1>
 							</div>
 						</div>
 					</div>
 					<div className='achievements-body-row2'>
 						<div className='achievements-body-row2-header'>
-							<h1 className='achievements-body-row2-header-label'>Your Events</h1>
+							<h1 className='achievements-body-row2-header-label'>
+								Your Events
+							</h1>
 						</div>
 						<div className='achievements-body-row2-table'>
 							<div className='achievements-body-row2-table-head'>
 								<div className='achievements-body-row2-table-head-col1'>#</div>
-								<div className='achievements-body-row2-table-head-col2'>Title</div>
-								<div className='achievements-body-row2-table-head-col3'>EXP</div>
-								<div className='achievements-body-row2-table-head-col4'>Date</div>
+								<div className='achievements-body-row2-table-head-col2'>
+									Title
+								</div>
+								<div className='achievements-body-row2-table-head-col3'>
+									EXP
+								</div>
+								<div className='achievements-body-row2-table-head-col4'>
+									Date
+								</div>
 							</div>
 							<div className='achievements-body-row2-table-body'>
 								{eventDetails.map((data: any, index: number) => {
 									return data ? (
-										<div className='achievements-body-row2-table-body-cells' key={index}>
-											<div className='achievements-body-row2-table-body-cells-col1'>{index + 1}</div>
-											<div className='achievements-body-row2-table-body-cells-col2'>{data.eventName}</div>
-											<div className='achievements-body-row2-table-body-cells-col3'>{data.expReward}</div>
-											<div className='achievements-body-row2-table-body-cells-col4'>{processDate(data)}</div>
+										<div
+											className='achievements-body-row2-table-body-cells'
+											key={index}
+										>
+											<div className='achievements-body-row2-table-body-cells-col1'>
+												{index + 1}
+											</div>
+											<div className='achievements-body-row2-table-body-cells-col2'>
+												{data.eventName}
+											</div>
+											<div className='achievements-body-row2-table-body-cells-col3'>
+												{data.expReward}
+											</div>
+											<div className='achievements-body-row2-table-body-cells-col4'>
+												{processDate(data)}
+											</div>
 										</div>
 									) : (
 										<h1>No events yet</h1>

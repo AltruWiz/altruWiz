@@ -23,6 +23,7 @@ function Profile() {
 	const user = useContext(UserContext);
 
 	useEffect(() => {
+		console.log('reading data Profile');
 		user && getCurrentUser();
 	}, []);
 	const getCurrentUser = async () => {

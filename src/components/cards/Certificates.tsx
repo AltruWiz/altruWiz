@@ -17,18 +17,28 @@ function Certificates() {
 	const [showModal, setShowModal] = useState(false);
 
 	useEffect(() => {
+		console.log('reading data Certs');
 		onSnapshot(collection(firestore, 'events'), (snapshot) => {
 			setEventList(snapshot.docs.map((docEach) => docEach.data()));
 		});
 		user &&
-			onSnapshot(query(collection(firestore, 'user'), where('email', '==', user.email)), (snapshot) => {
-				setCompletedEvents(snapshot.docs.at(0).data().completedEvents);
-				setName(snapshot.docs.at(0).data().name.first + ' ' + snapshot.docs.at(0).data().name.last);
-			});
+			onSnapshot(
+				query(collection(firestore, 'user'), where('email', '==', user.email)),
+				(snapshot) => {
+					setCompletedEvents(snapshot.docs.at(0).data().completedEvents);
+					setName(
+						snapshot.docs.at(0).data().name.first +
+							' ' +
+							snapshot.docs.at(0).data().name.last
+					);
+				}
+			);
 	}, []);
 	const processDate = (data: any) => {
 		const date = new Date(data.eventDate + 'T' + data.eventTime);
-		const time = new Date(data.eventDate + 'T' + data.eventTime).toLocaleTimeString('en-US', {
+		const time = new Date(
+			data.eventDate + 'T' + data.eventTime
+		).toLocaleTimeString('en-US', {
 			hour12: true,
 			hour: 'numeric',
 			minute: 'numeric',
@@ -55,7 +65,10 @@ function Certificates() {
 					{completedEvents.length === 0 && (
 						<div className='certificates-alt'>
 							<img src='/assets/noCerts.svg'></img>
-							<h1>Seems like you haven't done any event yet. What are you waiting for? Go get one now!</h1>
+							<h1>
+								Seems like you haven't done any event yet. What are you waiting
+								for? Go get one now!
+							</h1>
 						</div>
 					)}
 					{eventList
@@ -81,9 +94,15 @@ function Certificates() {
 									y: 0,
 								}}
 								transition={{ duration: 0.2, type: 'tween' }}
-								className='certificates-container'>
+								className='certificates-container'
+							>
 								<div className='certificates-container-image'>
-									<Cert name={name} title={data.eventName} org={data.eventCreator} date={data.eventDate} />
+									<Cert
+										name={name}
+										title={data.eventName}
+										org={data.eventCreator}
+										date={data.eventDate}
+									/>
 								</div>
 								<div className='certificates-container-details'>
 									<h1>{data.eventName}</h1>
