@@ -100,8 +100,8 @@ function Code({ showModal, setShowModal }: any) {
 					},
 					user.uid,
 			  )
-					.then(() => setShowSuccess(true))
-					.finally(checkForBadges)
+					.then(() => checkJoined && setShowSuccess(true))
+					.finally(checkJoined && checkForBadges)
 			: alert('Sorry. You already submitted this code.');
 	};
 
