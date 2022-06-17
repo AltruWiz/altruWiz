@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import Confetti from 'react-dom-confetti';
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import { firestore } from '../../firebase-config';
 import DataService from '../../firebase/services';
@@ -21,6 +22,20 @@ function Achievements() {
 	const [isUpdated, setIsUpdated] = useState(false);
 	const [eventList, setEventList] = useState([]);
 	const [showModal, setShowModal] = useState(false);
+
+	const config: any = {
+		angle: 90,
+		spread: 360,
+		startVelocity: 40,
+		elementCount: '90',
+		dragFriction: 0.12,
+		duration: '3200',
+		stagger: 3,
+		width: '10px',
+		height: '10px',
+		perspective: '500px',
+		colors: ['#a864fd', '#29cdff', '#78ff44', '#ff718d', '#fdff6a'],
+	};
 
 	useEffect(() => {
 		onSnapshot(collection(firestore, 'events'), (snapshot) => {
@@ -114,9 +129,7 @@ function Achievements() {
 				rank: newRank,
 			},
 			user.uid,
-		)
-			.then(() => setRank(newRank))
-			.finally(() => setShowModal(true));
+		).then(() => setRank(newRank));
 	};
 
 	const processDate = (data: any) => {
@@ -129,6 +142,7 @@ function Achievements() {
 		<ScrollTop>
 			<RankUp showModal={showModal} setShowModal={setShowModal} rank={rank || userRank} />
 			<div className='achievements'>
+				<Confetti active={showModal} config={config} />
 				<div id='locator' />
 				<div className='achievements-body'>
 					<div className='achievements-body-row1'>
