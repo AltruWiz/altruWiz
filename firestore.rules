@@ -1,9 +1,36 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if
-          request.time < timestamp.date(2022, 7, 17);
+    function signedInUser() {
+      return request.auth.uid != null;
+    }
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+  	function validOrganizer() {
+    	return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isOrganizer == true;
+    }
+    function preventSpam() {
+    	return (request.time - (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.lastUpdated.duration)) > duration.value(10, 's');
+    }
+    match /user/{userId} {
+      allow read: if signedInUser();
+      allow write, update, delete: if signedInUser() && isOwner(userId);
+    }
+    match /organizations/{orgId} {
+      allow read, create: if signedInUser();
+    	allow write, update: if signedInUser() && validOrganizer();
+    }
+    match /events/{eventId} {
+      allow read;
+      allow create: if signedInUser() && validOrganizer();
+      allow update, delete: if signedInUser() && validOrganizer();
+    } 
+    match /badges/{badgesId} {
+    	allow read, write: if signedInUser() && preventSpam();
+    }
+    match /ranks/{rankId} {
+    	allow read: if signedInUser();
     }
   }
 }
