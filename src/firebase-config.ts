@@ -3,16 +3,25 @@ import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
 
-const firebaseConfig = {
-	apiKey: 'AIzaSyAcM-zK0iYzfuoRFoiDzs7N5sAFU3CJxkc',
-	authDomain: 'altruwiz-backup.firebaseapp.com',
-	projectId: 'altruwiz-backup',
-	storageBucket: 'altruwiz-backup.appspot.com',
-	messagingSenderId: '991445541589',
-	appId: '1:991445541589:web:dbba0d81e252b675a8b85c',
-	measurementId: 'G-KG7DXCRVY8',
-};
+// const firebaseConfig = {
+// 	apiKey: 'AIzaSyAcM-zK0iYzfuoRFoiDzs7N5sAFU3CJxkc',
+// 	authDomain: 'altruwiz-backup.firebaseapp.com',
+// 	projectId: 'altruwiz-backup',
+// 	storageBucket: 'altruwiz-backup.appspot.com',
+// 	messagingSenderId: '991445541589',
+// 	appId: '1:991445541589:web:dbba0d81e252b675a8b85c',
+// 	measurementId: 'G-KG7DXCRVY8',
+// };
 
+const firebaseConfig = {
+	apiKey: "AIzaSyCMy9jTOt8hoTSijeMi65HBYRt99STA4YU",
+	authDomain: "altruwiz-dev.firebaseapp.com",
+	projectId: "altruwiz-dev",
+	storageBucket: "altruwiz-dev.appspot.com",
+	messagingSenderId: "675755830802",
+	appId: "1:675755830802:web:1dae950ac8b27bb5b072cb"
+  };
+  
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const storage = getStorage(app);

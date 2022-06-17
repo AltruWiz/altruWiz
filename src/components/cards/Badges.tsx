@@ -4,15 +4,17 @@ import DataService from '../../firebase/services';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { UserContext } from '../../App';
 import ScrollTop from './../navigations/scrollTop';
+import NewBadge from './../modals/NewBadge';
 
 function Badges() {
 	const [badgeDetails, setBadgeDetails]: any = useState([]);
 	const [data, setData]: any = useState(null);
 	const [isUpdated, setIsUpdated] = useState(false);
+	const [showBadge, setShowBadge] = useState(false);
 	const [userBadges, setUserBadges]: any = useState([]);
 	const user = useContext(UserContext);
 	const date = Date.now();
-
+	let badge: any = null;
 	useEffect(() => {
 		user &&
 			onSnapshot(
@@ -50,7 +52,7 @@ function Badges() {
 		let checkFirstT = true;
 		let checkStreak = true;
 
-		if (eventsCompleted.length >= 1) {
+		if (eventsCompleted.length === 1) {
 			badgesCollected.forEach((data: any) => {
 				checkBaby = checkBaby && data.badge !== 'Baby Steps';
 				// console.log('badge === Baby steps', data.badge, checkBaby);
@@ -60,50 +62,55 @@ function Badges() {
 					badge: 'Baby Steps',
 					date: date,
 				});
+			badge = checkBaby && 'Baby Steps';
 		}
-		if (eventsCompleted.length >= 5) {
+		if (eventsCompleted.length === 5) {
 			badgesCollected.forEach((data: any) => {
 				checkJunior = checkJunior && data.badge !== 'Junior Steps';
-				// console.log('badge === Junior steps', badge, checkJunior);
+				// console.log('== Junior steps', badge, checkJunior);
 			});
 			checkJunior &&
 				tempBadges.push({
 					badge: 'Junior Steps',
 					date: date,
 				});
+			badge = checkJunior && 'Junior Steps';
 		}
 		if (profilePic != '') {
 			badgesCollected.forEach((data: any) => {
 				checkPhoto = checkPhoto && data.badge !== 'Photogenic';
-				// console.log('badge === Love Thumb', badge, checkPhoto);
+				// console.log('== Love Thumb', badge, checkPhoto);
 			});
 			checkPhoto &&
 				tempBadges.push({
 					badge: 'Photogenic',
 					date: date,
 				});
+			badge = checkPhoto && 'Photogenic';
 		}
-		if (eventsJoined.length >= 1) {
+		if (eventsJoined.length === 1) {
 			badgesCollected.forEach((data: any) => {
 				checkFirstT = checkFirstT && data.badge !== 'First Timer';
-				// console.log('badge === FirstT steps', badge, checkFirstT);
+				// console.log('== FirstT steps', badge, checkFirstT);
 			});
 			checkFirstT &&
 				tempBadges.push({
 					badge: 'First Timer',
 					date: date,
 				});
+			badge = checkFirstT && 'First Timer';
 		}
-		if (eventsJoined.length >= 5) {
+		if (eventsJoined.length === 5) {
 			badgesCollected.forEach((data: any) => {
 				checkStreak = checkStreak && data.badge !== 'Streak Freak';
-				// console.log('badge === Streak Freak', badge, checkStreak);
+				// console.log('== Streak Freak', badge, checkStreak);
 			});
 			checkStreak &&
 				tempBadges.push({
 					badge: 'Streak Freak',
 					date: date,
 				});
+			badge = checkStreak && 'Streak Freak';
 		}
 
 		(checkPhoto || checkJunior || checkBaby || checkFirstT || checkStreak) &&
@@ -118,6 +125,7 @@ function Badges() {
 				checkPhoto = false;
 				checkFirstT = false;
 				checkStreak = false;
+				setShowBadge(true);
 			}));
 	};
 	data &&
@@ -142,6 +150,11 @@ function Badges() {
 	return (
 		<ScrollTop>
 			<div className='badges'>
+				{/* <NewBadge
+					showModal={showBadge}
+					setShowModal={setShowBadge}
+					badge={badge}
+				/> */}
 				<div id='locator' />
 				{badgeDetails.length === 0 && (
 					<div className='badges-alt'>
