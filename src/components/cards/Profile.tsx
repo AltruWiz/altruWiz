@@ -97,10 +97,7 @@ function Profile() {
 						getDownloadURL(item).then(async (url) => {
 							downloadedUrl = url;
 							try {
-								await DataService.updateUser(
-									{ profilePic: downloadedUrl },
-									user.uid
-								);
+								await DataService.updateUser({ profilePic: downloadedUrl }, user.uid);
 							} catch (error) {
 								console.log(error);
 							}
@@ -120,9 +117,7 @@ function Profile() {
 			bday: bday,
 		};
 		try {
-			await DataService.updateUser(updatedUser, user.uid).then(() =>
-				uploadImage()
-			);
+			await DataService.updateUser(updatedUser, user.uid).then(() => uploadImage());
 		} catch (error) {
 			console.log(error);
 		}
@@ -146,34 +141,16 @@ function Profile() {
 					<div className='profile-body-sec1'>
 						<div className='profile-body-sec1-container'>
 							{image ? (
-								<img
-									src={image}
-									alt=''
-									className='profile-body-sec1-container-image'
-								/>
+								<img src={image} alt='' className='profile-body-sec1-container-image' />
 							) : (
-								<img
-									src='/assets/noPic.svg'
-									alt=''
-									className='profile-body-sec1-container-image'
-								/>
+								<img src='/assets/noPic.svg' alt='' className='profile-body-sec1-container-image' />
 							)}
 							{!editState && (
 								<>
-									<label
-										htmlFor='profilePic'
-										className='profile-body-sec1-container-label'
-									>
+									<label htmlFor='profilePic' className='profile-body-sec1-container-label'>
 										<AddAPhotoOutlinedIcon className='profile-body-sec1-container-label-icon' />
 									</label>
-									<input
-										type='file'
-										accept='image/*'
-										name='image'
-										id='profilePic'
-										onChange={loadFile}
-										style={{ display: 'none' }}
-									/>
+									<input type='file' accept='image/*' name='image' id='profilePic' onChange={loadFile} style={{ display: 'none' }} />
 								</>
 							)}
 						</div>
@@ -181,17 +158,9 @@ function Profile() {
 							<h1>About You</h1>
 						</div>
 						<div className='profile-body-sec1-form'>
-							{description || !editState ? null : (
-								<img
-									className='profile-body-sec1-form-img'
-									src='/assets/lazy.svg'
-								/>
-							)}
+							{description || !editState ? null : <img className='profile-body-sec1-form-img' src='/assets/lazy.svg' />}
 							{editState ? (
-								<p className='profile-body-sec1-form-data'>
-									{description ||
-										'This person is either too lazy or has not yet added some details.'}
-								</p>
+								<p className='profile-body-sec1-form-data'>{description || 'This person is either too lazy or has not yet added some details.'}</p>
 							) : null}
 							{!editState ? (
 								<TextField
@@ -204,9 +173,7 @@ function Profile() {
 									className='profile-body-sec1-form-field'
 									value={description}
 									disabled={editState}
-									onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-										setDescription(event.target.value)
-									}
+									onChange={(event: React.ChangeEvent<HTMLInputElement>) => setDescription(event.target.value)}
 									fullWidth
 								/>
 							) : null}
@@ -219,9 +186,7 @@ function Profile() {
 						<div className='profile-body-sec2-form'>
 							<div className='profile-body-sec2-form-fname'>
 								<h1 className='profile-body-sec2-form-label'>First Name</h1>
-								{editState ? (
-									<h1 className='profile-body-sec2-form-data'>{firstName}</h1>
-								) : null}
+								{editState ? <h1 className='profile-body-sec2-form-data'>{firstName}</h1> : null}
 								{!editState ? (
 									<TextField
 										variant={editState ? 'standard' : 'outlined'}
@@ -231,18 +196,14 @@ function Profile() {
 										margin='dense'
 										value={firstName}
 										disabled={editState}
-										onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-											setFirstName(event.target.value)
-										}
+										onChange={(event: React.ChangeEvent<HTMLInputElement>) => setFirstName(event.target.value)}
 										fullWidth
 									/>
 								) : null}
 							</div>
 							<div className='profile-body-sec2-form-lname'>
 								<h1 className='profile-body-sec2-form-label'>Last Name</h1>
-								{editState ? (
-									<h1 className='profile-body-sec2-form-data'>{lastName}</h1>
-								) : null}
+								{editState ? <h1 className='profile-body-sec2-form-data'>{lastName}</h1> : null}
 								{!editState ? (
 									<TextField
 										variant={editState ? 'standard' : 'outlined'}
@@ -252,18 +213,14 @@ function Profile() {
 										margin='dense'
 										value={lastName}
 										disabled={editState}
-										onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-											setLastName(event.target.value)
-										}
+										onChange={(event: React.ChangeEvent<HTMLInputElement>) => setLastName(event.target.value)}
 										fullWidth
 									/>
 								) : null}
 							</div>
 							<div className='profile-body-sec2-form-gender'>
 								<h1 className='profile-body-sec2-form-label'>Gender</h1>
-								{editState ? (
-									<h1 className='profile-body-sec2-form-data'>{gender}</h1>
-								) : null}
+								{editState ? <h1 className='profile-body-sec2-form-data'>{gender}</h1> : null}
 								{!editState ? (
 									<TextField
 										variant={editState ? 'standard' : 'outlined'}
@@ -275,21 +232,16 @@ function Profile() {
 										value={gender}
 										disabled={editState}
 										select={!editState}
-										onChange={(event) => setGender(event.target.value)}
-									>
+										onChange={(event) => setGender(event.target.value)}>
 										<MenuItem value={'Male'}>Male</MenuItem>
 										<MenuItem value={'Female'}>Female</MenuItem>
-										<MenuItem value={'Prefer not to say'}>
-											Prefer not to say
-										</MenuItem>
+										<MenuItem value={'Prefer not to say'}>Prefer not to say</MenuItem>
 									</TextField>
 								) : null}
 							</div>
 							<div className='profile-body-sec2-form-bday'>
 								<h1 className='profile-body-sec2-form-label'>Birthday</h1>
-								{editState ? (
-									<h1 className='profile-body-sec2-form-data'>{bday}</h1>
-								) : null}
+								{editState ? <h1 className='profile-body-sec2-form-data'>{bday}</h1> : null}
 								{!editState ? (
 									<TextField
 										variant={editState ? 'standard' : 'outlined'}
@@ -306,9 +258,7 @@ function Profile() {
 							</div>
 							<div className='profile-body-sec2-form-email'>
 								<h1 className='profile-body-sec2-form-label'>Email</h1>
-								{editState ? (
-									<h1 className='profile-body-sec2-form-data'>{email}</h1>
-								) : null}
+								{editState ? <h1 className='profile-body-sec2-form-data'>{email}</h1> : null}
 								{!editState ? (
 									<TextField
 										variant={editState ? 'standard' : 'outlined'}
@@ -317,19 +267,15 @@ function Profile() {
 										className='profile-body-sec2-form-email-field'
 										margin='dense'
 										value={email}
-										disabled={editState}
-										onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-											setEmail(event.target.value)
-										}
+										disabled={true}
+										onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
 										fullWidth
 									/>
 								) : null}
 							</div>
 							<div className='profile-body-sec2-form-address'>
 								<h1 className='profile-body-sec2-form-label'>Address</h1>
-								{editState ? (
-									<h1 className='profile-body-sec2-form-data'>{address}</h1>
-								) : null}
+								{editState ? <h1 className='profile-body-sec2-form-data'>{address}</h1> : null}
 								{!editState ? (
 									<TextField
 										variant={editState ? 'standard' : 'outlined'}
@@ -339,9 +285,7 @@ function Profile() {
 										margin='dense'
 										value={address}
 										disabled={editState}
-										onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-											setAddress(event.target.value)
-										}
+										onChange={(event: React.ChangeEvent<HTMLInputElement>) => setAddress(event.target.value)}
 										fullWidth
 									/>
 								) : null}
@@ -354,8 +298,7 @@ function Profile() {
 									whileHover={{ y: '-3px' }}
 									whileTap={{ y: '3px' }}
 									className='profile-body-sec2-footer-button'
-									onClick={() => setEditState(false)}
-								>
+									onClick={() => setEditState(false)}>
 									Edit
 								</motion.button>
 							) : (
@@ -367,8 +310,7 @@ function Profile() {
 										onClick={() => {
 											setEditState(true);
 											update();
-										}}
-									>
+										}}>
 										Save Changes
 									</motion.button>
 									<motion.button
@@ -378,8 +320,7 @@ function Profile() {
 										onClick={() => {
 											setEditState(true);
 											handleCancel();
-										}}
-									>
+										}}>
 										Cancel Changes
 									</motion.button>
 								</div>

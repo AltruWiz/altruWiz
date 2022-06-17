@@ -9,11 +9,8 @@ function NewBadge({ showModal, setShowModal, badge }: any) {
 			animate={showModal ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
 			transition={{
 				scale: showModal ? { duration: 0.1 } : { delay: 0.5, duration: 0.1 },
-				default: showModal
-					? { delay: 0.1, duration: 0.5, type: 'tween' }
-					: { duration: 0.5, type: 'tween' },
-			}}
-		>
+				default: showModal ? { delay: 0.1, duration: 0.5, type: 'tween' } : { duration: 0.5, type: 'tween' },
+			}}>
 			<motion.div
 				className='newbadge-container'
 				initial={{
@@ -28,16 +25,12 @@ function NewBadge({ showModal, setShowModal, badge }: any) {
 								scale: 0,
 						  }
 				}
-				transition={{ delay: 0.1, duration: 0.5, type: 'tween' }}
-			>
+				transition={{ delay: 0.1, duration: 0.5, type: 'tween' }}>
 				<div className='newbadge-container-row1' onClick={setShowModal(false)}>
 					<CloseIcon className='newbadge-container-row1-icon' />
 				</div>
 				<div className='newbadge-container-row2'>
-					<img
-						src='/assets/award.png'
-						className='newbadge-container-row2-icon'
-					/>
+					<img src='/assets/award.png' className='newbadge-container-row2-icon' />
 
 					<h1>New Achievement!</h1>
 					<h2>
@@ -52,8 +45,7 @@ function NewBadge({ showModal, setShowModal, badge }: any) {
 						onClick={() => {
 							setShowModal(false);
 							// navigate('/dashboard');
-						}}
-					>
+						}}>
 						View Badges
 					</button>
 				</div>
