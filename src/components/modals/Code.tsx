@@ -13,6 +13,7 @@ function Code({ showModal, setShowModal }: any) {
 	const [eventList, setEventList] = useState([]);
 	const [joinedEvents, setJoinedEvents] = useState([]);
 	const [completedEvents, setCompletedEvents] = useState([]);
+	const [badgesCollected, setBadgesCollected] = useState([]);
 	const [code, setCode] = useState('');
 	const [currentExp, setCurrentExp] = useState(0);
 
@@ -26,8 +27,39 @@ function Code({ showModal, setShowModal }: any) {
 				setJoinedEvents(snapshot.docs.at(0).data().eventsJoined);
 				setCompletedEvents(snapshot.docs.at(0).data().completedEvents);
 				setCurrentExp(snapshot.docs.at(0).data().expTotal);
+				setBadgesCollected(snapshot.docs.at(0).data().badgesCollected);
 			});
 	}, [loading]);
+
+	const checkForBadges = async () => {
+		let completedCount = completedEvents.length;
+		let newBadges = badgesCollected;
+		let tempBadges = [];
+
+		if (completedCount === 1) {
+			tempBadges.push({ badge: 'Baby Steps', date: Date.now() });
+			await DataService.updateUser(
+				{
+					badgesCollected: newBadges.concat(tempBadges),
+				},
+				user.uid,
+			).then(() => {
+				console.log('writing data badges');
+				console.log('new BagdesCollected: ', newBadges.concat(tempBadges));
+			});
+		} else if (completedCount === 5) {
+			tempBadges.push({ badge: 'Junior Steps', date: Date.now() });
+			await DataService.updateUser(
+				{
+					badgesCollected: newBadges.concat(tempBadges),
+				},
+				user.uid,
+			).then(() => {
+				console.log('writing data badges');
+				console.log('new BagdesCollected: ', newBadges.concat(tempBadges));
+			});
+		}
+	};
 
 	const updateUserEvents = async () => {
 		let check = true;
@@ -67,7 +99,9 @@ function Code({ showModal, setShowModal }: any) {
 						completedEvents: completed,
 					},
 					user.uid,
-			  ).then(() => setShowSuccess(true))
+			  )
+					.then(() => setShowSuccess(true))
+					.finally(checkForBadges)
 			: alert('Sorry. You already submitted this code.');
 	};
 

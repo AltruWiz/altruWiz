@@ -30,18 +30,12 @@ function DBNav() {
 
 	useEffect(() => {
 		user && user.emailVerified
-			? onSnapshot(
-					query(
-						collection(firestore, 'user'),
-						where('email', '==', user.email)
-					),
-					(snapshot) => {
-						setUserName(snapshot.docs.at(0).data().name.first);
-						setUserAvatar(snapshot.docs.at(0).data().profilePic);
-						setIsOrganizer(snapshot.docs.at(0).data().isOrganizer);
-						getCurrentOrg();
-					}
-			  )
+			? onSnapshot(query(collection(firestore, 'user'), where('email', '==', user.email)), (snapshot) => {
+					setUserName(snapshot.docs.at(0).data().name.first);
+					setUserAvatar(snapshot.docs.at(0).data().profilePic);
+					setIsOrganizer(snapshot.docs.at(0).data().isOrganizer);
+					getCurrentOrg();
+			  })
 			: navigate('/verify');
 	}, []);
 
@@ -54,13 +48,10 @@ function DBNav() {
 	};
 	const getCurrentOrg = async () => {
 		await DataService.getOrg(user.uid).then((docSnap) => {
-			// console.log(user.uid);
 			if (docSnap.exists()) {
-				// console.log('Document data:', docSnap.data());
 				const myData = docSnap.data();
 				setOrgName(myData.orgName);
 			} else {
-				// doc.data() will be undefined in this case
 				console.log('No such document!');
 			}
 		});
@@ -72,49 +63,26 @@ function DBNav() {
 			<div className='nav'>
 				<div className='nav-col1' onClick={() => navigate('/')}>
 					<h1 className='nav-col1-text'>AltruWiz</h1>
-					<img
-						src='/assets/altruwiz-logo-colored.svg'
-						className='nav-col1-icon'
-					/>
+					<img src='/assets/altruwiz-logo-colored.svg' className='nav-col1-icon' />
 				</div>
 				<nav className='nav-col2-p'>
 					<div className='nav-col2-container'>
-						<button
-							className='nav-col2-container-button'
-							onClick={() => setShowModal(true)}
-						>
+						<button className='nav-col2-container-button' onClick={() => setShowModal(true)}>
 							Event Code
 						</button>
 					</div>
 					<div className='nav-col2-profile'>
-						<motion.h1
-							whileTap={{ y: '2px' }}
-							className='nav-col2-profile-text'
-							onClick={() => navigate('/dashboard')}
-						>
+						<motion.h1 whileTap={{ y: '2px' }} className='nav-col2-profile-text' onClick={() => navigate('/dashboard')}>
 							{userName}
 						</motion.h1>
 						<div className='nav-col2-profile-nav'>
 							{userAvatar ? (
-								<img
-									src={userAvatar}
-									className='nav-col2-profile-nav-pic'
-									onClick={() => setDropdownState(!dropDownState)}
-								/>
+								<img src={userAvatar} className='nav-col2-profile-nav-pic' onClick={() => setDropdownState(!dropDownState)} />
 							) : (
-								<AccountCircleIcon
-									className='nav-col2-profile-nav-pic'
-									onClick={() => setDropdownState(!dropDownState)}
-								/>
+								<AccountCircleIcon className='nav-col2-profile-nav-pic' onClick={() => setDropdownState(!dropDownState)} />
 							)}
-							<motion.div
-								animate={dropDownState ? { rotate: '-180deg' } : { rotate: 0 }}
-								transition={{ duration: 0.5, type: 'spring' }}
-							>
-								<ArrowDropDownIcon
-									className='nav-col2-profile-nav-menu'
-									onClick={() => setDropdownState(!dropDownState)}
-								/>
+							<motion.div animate={dropDownState ? { rotate: '-180deg' } : { rotate: 0 }} transition={{ duration: 0.5, type: 'spring' }}>
+								<ArrowDropDownIcon className='nav-col2-profile-nav-menu' onClick={() => setDropdownState(!dropDownState)} />
 							</motion.div>
 							<motion.div
 								initial={{
@@ -123,19 +91,12 @@ function DBNav() {
 									scale: 0,
 									opacity: 0,
 								}}
-								animate={
-									dropDownState
-										? { y: 0, zIndex: 1, opacity: 1, scale: 1 }
-										: { y: '-100%', zIndex: -1, opacity: 0, scale: 0 }
-								}
-								className='nav-col2-profile-nav-modal-open'
-							>
+								animate={dropDownState ? { y: 0, zIndex: 1, opacity: 1, scale: 1 } : { y: '-100%', zIndex: -1, opacity: 0, scale: 0 }}
+								className='nav-col2-profile-nav-modal-open'>
 								<Button
 									startIcon={<JoinInnerIcon />}
 									onClick={() => {
-										orgName
-											? navigate('/organizer')
-											: navigate('/organizer/makeorg');
+										orgName ? navigate('/organizer') : navigate('/organizer/makeorg');
 										setDropdownState(false);
 									}}
 									style={{
@@ -145,8 +106,7 @@ function DBNav() {
 										fontStyle: 'normal',
 										fontWeight: '500',
 										fontSize: '0.8rem',
-									}}
-								>
+									}}>
 									{' '}
 									{isOrganizer ? orgName : 'Be an Organizer'}
 								</Button>
@@ -162,8 +122,7 @@ function DBNav() {
 										fontStyle: 'normal',
 										fontWeight: '500',
 										fontSize: '0.8rem',
-									}}
-								>
+									}}>
 									{' '}
 									Log-out
 								</Button>

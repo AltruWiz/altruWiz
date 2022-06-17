@@ -79,22 +79,22 @@ function Badges() {
 	// 			}
 	// 		}
 	// 	});
-	// 	tempBadges &&
-	// 		(await DataService.updateUser(
-	// 			{
-	// 				badgesCollected: newBadges.concat(tempBadges),
-	// 			},
-	// 			user.uid
-	// 		).then(() => {
-	// 			console.log('writing data badges');
-	// 			console.log('new BagdesCollected: ', newBadges.concat(tempBadges));
-	// 			// checkJunior = false;
-	// 			// checkBaby = false;
-	// 			// checkPhoto = false;
-	// 			// checkFirstT = false;
-	// 			// checkStreak = false;
-	// 			setShowBadge(true);
-	// 		}));
+		// tempBadges &&
+		// 	(await DataService.updateUser(
+		// 		{
+		// 			badgesCollected: newBadges.concat(tempBadges),
+		// 		},
+		// 		user.uid
+		// 	).then(() => {
+		// 		console.log('writing data badges');
+		// 		console.log('new BagdesCollected: ', newBadges.concat(tempBadges));
+		// 		// checkJunior = false;
+		// 		// checkBaby = false;
+		// 		// checkPhoto = false;
+		// 		// checkFirstT = false;
+		// 		// checkStreak = false;
+		// 		setShowBadge(true);
+		// 	}));
 	// };
 
 	// data &&
