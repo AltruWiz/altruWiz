@@ -20,6 +20,7 @@ function Details() {
 	const [eventCreator, setEventCreator] = useState('');
 	const [creatorEmail, setCreatorEmail] = useState('');
 	const [myEvents, setMyEvents] = useState([]);
+	const [badgesCollected, setBadgesCollected]: any = useState(null);
 	const [user, loading] = useAuthState(auth);
 	const [eventsJoined, setEventsJoined] = useState([]);
 	const [data, setData] = useState(null);
@@ -27,21 +28,36 @@ function Details() {
 
 	useEffect(() => {
 		user &&
-			onSnapshot(query(collection(firestore, 'events'), where('eventID', '==', id)), (snapshot) => {
-				setData(snapshot.docs.at(0).data());
-				setEventCreator(snapshot.docs.at(0).data().eventCreator);
-			});
+			onSnapshot(
+				query(collection(firestore, 'events'), where('eventID', '==', id)),
+				(snapshot) => {
+					setData(snapshot.docs.at(0).data());
+					setEventCreator(snapshot.docs.at(0).data().eventCreator);
+				}
+			);
 
-		user && showRsvp ? (document.querySelector('body').style.overflow = 'hidden') : (document.querySelector('body').style.overflow = 'auto');
+		user && showRsvp
+			? (document.querySelector('body').style.overflow = 'hidden')
+			: (document.querySelector('body').style.overflow = 'auto');
 		user &&
-			onSnapshot(query(collection(firestore, 'user'), where('email', '==', user.email)), (snapshot) => {
-				setMyEvents(snapshot.docs.at(0).data().eventsJoined);
-			});
+			onSnapshot(
+				query(collection(firestore, 'user'), where('email', '==', user.email)),
+				(snapshot) => {
+					setMyEvents(snapshot.docs.at(0).data().eventsJoined);
+					setBadgesCollected(snapshot.docs.at(0).data().badgesCollected);
+				}
+			);
 		eventCreator &&
-			onSnapshot(query(collection(firestore, 'organizations'), where('orgName', '==', eventCreator)), (snapshot) => {
-				setCreatorEmail(snapshot.docs.at(0).data().creator);
-				setOrgDesc(snapshot.docs.at(0).data().orgAbout);
-			});
+			onSnapshot(
+				query(
+					collection(firestore, 'organizations'),
+					where('orgName', '==', eventCreator)
+				),
+				(snapshot) => {
+					setCreatorEmail(snapshot.docs.at(0).data().creator);
+					setOrgDesc(snapshot.docs.at(0).data().orgAbout);
+				}
+			);
 	}, [showRsvp, loading, eventCreator]);
 	const processDate = (data: any) => {
 		const date = new Date(data?.eventDate + 'T' + data?.eventTime);
@@ -49,7 +65,9 @@ function Details() {
 		return date.toDateString();
 	};
 	const processTime = (data: any) => {
-		const time = new Date(data?.eventDate + 'T' + data?.eventTime).toLocaleTimeString('en-US', {
+		const time = new Date(
+			data?.eventDate + 'T' + data?.eventTime
+		).toLocaleTimeString('en-US', {
 			hour12: true,
 			hour: 'numeric',
 			minute: 'numeric',
@@ -59,7 +77,15 @@ function Details() {
 	return (
 		<ScrollTop>
 			<div id='locator' />
-			<Rsvp event={data} showModal={showRsvp} setShowModal={setShowRsvp} user={user} myEvents={eventsJoined} creator={creatorEmail} />
+			<Rsvp
+				event={data}
+				showModal={showRsvp}
+				setShowModal={setShowRsvp}
+				user={user}
+				myEvents={eventsJoined}
+				creator={creatorEmail}
+				badgesCollected={badgesCollected}
+			/>
 			<div className='details'>
 				<div className='details-nav'>
 					<DBNav />
@@ -79,8 +105,12 @@ function Details() {
 							<img src={data?.eventImage} alt={data?.eventName} />
 						</div>
 						<div className='details-head-row1-col2'>
-							<h1 className='details-head-row1-col2-title'>{data?.eventName}</h1>
-							<h1 className='details-head-row1-col2-org'>by {data?.eventCreator}</h1>
+							<h1 className='details-head-row1-col2-title'>
+								{data?.eventName}
+							</h1>
+							<h1 className='details-head-row1-col2-org'>
+								by {data?.eventCreator}
+							</h1>
 							<div className='details-head-row1-col2-xp'>
 								<img src='/assets/pseudodata/images/star.png' alt='Star Icon' />
 								<p>{data?.expReward}</p>
@@ -96,19 +126,30 @@ function Details() {
 							}}
 						/>
 						{showShare && (
-							<Share url={shareUrl} eventName={data?.eventName} eventDesc={data?.eventDesc} showModal={showShare} setShowModal={setShowShare} />
+							<Share
+								url={shareUrl}
+								eventName={data?.eventName}
+								eventDesc={data?.eventDesc}
+								showModal={showShare}
+								setShowModal={setShowShare}
+							/>
 						)}
 						{myEvents.includes(data?.eventCode) ? (
-							<button className='details-head-row2-register'>Participated</button>
+							<button className='details-head-row2-register'>
+								Participated
+							</button>
 						) : data?.attendCount >= data?.membersAllowed ? (
-							<button className='details-head-row2-register'>Max capacity reached</button>
+							<button className='details-head-row2-register'>
+								Max capacity reached
+							</button>
 						) : (
 							<button
 								onClick={() => {
 									setEventsJoined([...myEvents, data?.eventCode]);
 									setShowRsvp(true);
 								}}
-								className='details-head-row2-register'>
+								className='details-head-row2-register'
+							>
 								Register
 							</button>
 						)}

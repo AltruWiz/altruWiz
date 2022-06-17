@@ -20,6 +20,7 @@ function Profile() {
 	const [description, setDescription] = useState('');
 	const [bday, setBday] = useState('');
 	const [editState, setEditState] = useState(true);
+	// const [showBadge, setShowBadge] = useState(true);
 	const user = useContext(UserContext);
 
 	useEffect(() => {
@@ -40,11 +41,39 @@ function Profile() {
 				setBday(myData.bday);
 				setImage(myData.profilePic);
 				setData(myData);
+				rewardBadge(myData.profilePic, myData.badgesCollected);
 			} else {
 				// doc.data() will be undefined in this case
 				console.log('No such document!');
 			}
 		});
+	};
+
+	const rewardBadge = async (image: any, data: any) => {
+		if (image) {
+			let allBadges = [];
+			let tempBadges = [];
+			let newBadges = data;
+			data.forEach((data: any) => allBadges.push(data.badge));
+			// console.log('allB:', allBadges);
+			allBadges.includes('Photogenic') ||
+				tempBadges.push({ badge: 'Photogenic', date: Date.now() });
+			tempBadges && console.log('rewarded Photogenic Badge');
+			tempBadges &&
+				(await DataService.updateUser(
+					{
+						badgesCollected: newBadges.concat(tempBadges),
+					},
+					user.uid
+				).then(() => {
+					console.log('writing data badges');
+					console.log(
+						'updated BagdesCollected: ',
+						newBadges.concat(tempBadges)
+					);
+					// setShowBadge(true);
+				}));
+		}
 	};
 
 	const loadFile = (event: any) => {

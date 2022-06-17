@@ -112,15 +112,12 @@ class DataService {
 	getBadges = async () => {
 		const colRef = collection(firestore, badgeCol);
 		let badgeList: any = [];
-		console.log('DataService');
-		console.log('BadgeList: ', badgeList);
 
 		return getDocs(colRef)
 			.then((snapshot) => {
 				snapshot.docs.forEach((docEach) => {
 					badgeList.push({ ...docEach.data(), id: docEach.id });
 				});
-				console.log('Snapshot: ', snapshot);
 				return badgeList;
 			})
 			.catch((err) => {

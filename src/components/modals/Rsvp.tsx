@@ -5,7 +5,15 @@ import DataService from '../../firebase/services';
 import JoinedEvent from './JoinedEvent';
 import emailjs from '@emailjs/browser';
 
-function Rsvp({ event, showModal, setShowModal, user, myEvents, creator}: any) {
+function Rsvp({
+	event,
+	showModal,
+	setShowModal,
+	user,
+	myEvents,
+	creator,
+	badgesCollected,
+}: any) {
 	const [showSuccess, setShowSuccess] = useState(false);
 	const serviceId = 'service_uudw07o';
 	const templateId = 'template_xp295v9';
@@ -17,48 +25,91 @@ function Rsvp({ event, showModal, setShowModal, user, myEvents, creator}: any) {
 			{
 				attendCount: newAttendCount,
 			},
-			id,
+			id
 		);
+	};
+
+	const checkForBadges = async () => {
+		let joinedCount = myEvents.length;
+		let newBadges = badgesCollected;
+		let tempBadges = [];
+
+		if (joinedCount === 1) {
+			tempBadges.push({ badge: 'First Timer', date: Date.now() });
+			await DataService.updateUser(
+				{
+					badgesCollected: newBadges.concat(tempBadges),
+				},
+				user.uid
+			).then(() => {
+				console.log('writing data badges');
+				console.log('new BagdesCollected: ', newBadges.concat(tempBadges));
+			});
+		} else if (joinedCount === 5) {
+			tempBadges.push({ badge: 'Streak Freak', date: Date.now() });
+			await DataService.updateUser(
+				{
+					badgesCollected: newBadges.concat(tempBadges),
+				},
+				user.uid
+			).then(() => {
+				console.log('writing data badges');
+				console.log('new BagdesCollected: ', newBadges.concat(tempBadges));
+			});
+		}
 	};
 	const participateEvent = async (eventsJoined: any) => {
 		await DataService.updateUser(
 			{
 				eventsJoined: eventsJoined,
 			},
-			user.uid,
-		).then(() => setShowSuccess(true));
+			user.uid
+		)
+			.then(() => setShowSuccess(true))
+			.finally(checkForBadges);
 	};
 
 	//using template: Event Registration Success in EmailJS
 	const emailConfirmation = (
-		eventName: string, 
+		eventName: string,
 		eventDate: any,
 		eventTime: any,
 		eventExp: number,
-		email: string,
-		) => {
+		email: string
+	) => {
 		let template_params = {
 			event_joined: eventName,
 			event_date: eventDate,
 			user_email: email,
 			event_time: eventTime,
-			event_exp: eventExp
-		}
+			event_exp: eventExp,
+		};
 		emailjs.send(serviceId, templateId, template_params, userId);
-		{console.log('Success! Email Registration Sent!')}
-	}
+		{
+			console.log('Success! Email Registration Sent!');
+		}
+	};
 
 	return (
 		<>
-			<JoinedEvent showModal={showSuccess} setShowModal={setShowSuccess} event={event?.eventName} />
+			<JoinedEvent
+				showModal={showSuccess}
+				setShowModal={setShowSuccess}
+				event={event?.eventName}
+			/>
 			<motion.div
 				initial={{ scale: 0, opacity: 0 }}
-				animate={showModal ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+				animate={
+					showModal ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }
+				}
 				transition={{
 					scale: showModal ? { duration: 0.1 } : { delay: 0.5, duration: 0.1 },
-					default: showModal ? { delay: 0.1, duration: 0.5, type: 'tween' } : { duration: 0.5, type: 'tween' },
+					default: showModal
+						? { delay: 0.1, duration: 0.5, type: 'tween' }
+						: { duration: 0.5, type: 'tween' },
 				}}
-				className='rsvp'>
+				className='rsvp'
+			>
 				<motion.div
 					initial={{
 						y: '100%',
@@ -73,9 +124,13 @@ function Rsvp({ event, showModal, setShowModal, user, myEvents, creator}: any) {
 							  }
 					}
 					transition={{ delay: 0.1, duration: 0.5, type: 'tween' }}
-					className='rsvp-container'>
+					className='rsvp-container'
+				>
 					<div className='rsvp-container-close'>
-						<CloseIcon onClick={() => setShowModal(false)} className='rsvp-container-close-icon' />
+						<CloseIcon
+							onClick={() => setShowModal(false)}
+							className='rsvp-container-close-icon'
+						/>
 					</div>
 					<div className='rsvp-container-header'>
 						<div className='rsvp-container-header-texts'>
@@ -105,14 +160,18 @@ function Rsvp({ event, showModal, setShowModal, user, myEvents, creator}: any) {
 										event?.eventDate,
 										event?.eventTime,
 										event?.expReward,
-										user?.email,
+										user?.email
 									);
 									participateEvent(myEvents);
 									setShowModal(false);
-								}}>
+								}}
+							>
 								Participate
 							</button>
-							<a href={`mailto:${creator}`} className='rsvp-container-body-col2-btn2'>
+							<a
+								href={`mailto:${creator}`}
+								className='rsvp-container-body-col2-btn2'
+							>
 								Contact Organizer
 							</a>
 						</div>
