@@ -34,7 +34,7 @@ function Footer() {
 							</Link>
 						</nav>
 					</div>
-					<div className='footer-row1-block2-col2'>
+					{/* <div className='footer-row1-block2-col2'>
 						<div className='footer-row1-block2-col2-head'>
 							<h1>Legal</h1>
 						</div>
@@ -46,7 +46,7 @@ function Footer() {
 								Privacy
 							</Link>
 						</nav>
-					</div>
+					</div> */}
 					<div className='footer-row1-block2-col3'>
 						<div className='footer-row1-block2-col3-head'>
 							<h1>Contact Us</h1>
