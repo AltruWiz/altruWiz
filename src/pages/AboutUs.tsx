@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../components/footer/Footer';
 import AuthNav from '../components/navbar/AuthNav';
 
 function AboutUs() {
@@ -14,11 +15,10 @@ function AboutUs() {
 							Meet the minds behind
 						</h1>
 						<h1 className='aboutus-body-container1-row1-text2'>ALTRUWIZ</h1>
-					</div>
-					<div className='aboutus-body-container1-row2'>
+
 						<img
 							src='../../../../assets/aboutus.png'
-							className='aboutus-body-container1-row2-img'
+							className='aboutus-body-container1-row1-img'
 						/>
 					</div>
 				</div>
@@ -27,11 +27,11 @@ function AboutUs() {
 						<div className='aboutus-body-container2-row1-box1'>
 							<div className='aboutus-body-container2-row1-box1-col'>
 								<img
-									src=''
+									src='../../../../assets/nash.jpg'
 									className='aboutus-body-container2-row1-box1-col-img'
 								/>
 								<h1 className='aboutus-body-container2-row1-box1-col-text1'>
-									NASH URIEL A. TAPAYAN
+									NASH URIEL TAPAYAN
 								</h1>
 								<h2 className='aboutus-body-container2-row1-box1-col-text2'>
 									Front-End Developer
@@ -44,11 +44,11 @@ function AboutUs() {
 						<div className='aboutus-body-container2-row1-box2'>
 							<div className='aboutus-body-container2-row1-box2-col'>
 								<img
-									src=''
+									src='../../../../assets/zenn.jpg'
 									className='aboutus-body-container2-row1-box2-col-img'
 								/>
 								<h1 className='aboutus-body-container2-row1-box2-col-text1'>
-									Renz Brian T. Velez
+									RENZ BRIAN VELEZ
 								</h1>
 								<h2 className='aboutus-body-container2-row1-box2-col-text2'>
 									Front-End Developer
@@ -63,11 +63,11 @@ function AboutUs() {
 						<div className='aboutus-body-container2-row2-box1'>
 							<div className='aboutus-body-container2-row2-box1-col'>
 								<img
-									src=''
+									src='../../../../assets/2by2Frmal.jpg'
 									className='aboutus-body-container2-row2-box1-col-img'
 								/>
 								<h1 className='aboutus-body-container2-row2-box1-col-text1'>
-									Mervin John Tampus
+									MERVIN JOHN TAMPUS
 								</h1>
 								<h2 className='aboutus-body-container2-row2-box1-col-text2'>
 									Back-End Developer
@@ -80,11 +80,11 @@ function AboutUs() {
 						<div className='aboutus-body-container2-row2-box2'>
 							<div className='aboutus-body-container2-row2-box2-col'>
 								<img
-									src=''
+									src='../../../../assets/jezz.jpg'
 									className='aboutus-body-container2-row2-box2-col-img'
 								/>
 								<h1 className='aboutus-body-container2-row2-box2-col-text1'>
-									Jezreel Jedidiah O. Floreta
+									JEZREEL JEDIDIAH FLORETA
 								</h1>
 								<h2 className='aboutus-body-container2-row2-box2-col-text2'>
 									Quality Assurance Manager
@@ -99,11 +99,11 @@ function AboutUs() {
 						<div className='aboutus-body-container2-row3-box1'>
 							<div className='aboutus-body-container2-row3-box1-col'>
 								<img
-									src=''
+									src='../../../../assets/jessamugshot.jpg'
 									className='aboutus-body-container2-row3-box1-col-img'
 								/>
 								<h1 className='aboutus-body-container2-row3-box1-col-text1'>
-									JESSA MARIE I. MACAPAGONG
+									JESSA MARIE MACAPAGONG
 								</h1>
 								<h2 className='aboutus-body-container2-row3-box1-col-text2'>
 									UI/UX Designer
@@ -115,6 +115,9 @@ function AboutUs() {
 						</div>
 					</div>
 				</div>
+			</div>
+			<div className='organizers-footer'>
+				<Footer />
 			</div>
 		</div>
 	);
