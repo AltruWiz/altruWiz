@@ -26,7 +26,7 @@ function Footer() {
 							<Link to={'/events'} className='footer-row1-block2-col1-links-text'>
 								Events
 							</Link>
-							<Link to={'/'} className='footer-row1-block2-col1-links-text'>
+							<Link to={'/about_us'} className='footer-row1-block2-col1-links-text'>
 								About Us
 							</Link>
 							<Link to={'/'} className='footer-row1-block2-col1-links-text'>

@@ -39,7 +39,7 @@ function App() {
 					<Route path='/' element={<Landing />} />
 					<Route path='/test' element={<EventSuccess />} />
 					<Route path='/test3' element={<RankUp />} />
-					<Route path='/test2' element={<AboutUs />} />
+					<Route path='/about_us' element={<AboutUs />} />
 					<Route path='/test5' element={<NewBadge />} />
 					<Route path='/login' element={<Signin />} />
 					<Route path='/verify' element={<VerifyEmail />} />
