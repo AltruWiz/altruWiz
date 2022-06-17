@@ -4,13 +4,13 @@ import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-	apiKey: 'AIzaSyA03oMSzv8tqyOymF3Ocpa3lOrvfcQj4HY',
-	authDomain: 'altruwiz.firebaseapp.com',
-	projectId: 'altruwiz',
-	storageBucket: 'altruwiz.appspot.com',
-	messagingSenderId: '24616873117',
-	appId: '1:24616873117:web:ed897dea3fe3dcb738f874',
-	measurementId: 'G-LJH38Y54GS',
+	apiKey: 'AIzaSyAcM-zK0iYzfuoRFoiDzs7N5sAFU3CJxkc',
+	authDomain: 'altruwiz-backup.firebaseapp.com',
+	projectId: 'altruwiz-backup',
+	storageBucket: 'altruwiz-backup.appspot.com',
+	messagingSenderId: '991445541589',
+	appId: '1:991445541589:web:dbba0d81e252b675a8b85c',
+	measurementId: 'G-KG7DXCRVY8',
 };
 
 const app = initializeApp(firebaseConfig);
