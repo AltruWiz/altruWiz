@@ -25,6 +25,7 @@ import JoinedEvent from './components/modals/JoinedEvent';
 import NewBadge from './components/modals/NewBadge';
 import VerifyEmail from './pages/VerifyEmail';
 import EventSearch from './components/listing/EventSearch';
+import AboutUs from './pages/AboutUs';
 
 export const UserContext = createContext(null);
 
@@ -38,6 +39,7 @@ function App() {
 					<Route path='/' element={<Landing />} />
 					<Route path='/test' element={<EventSuccess />} />
 					<Route path='/test3' element={<RankUp />} />
+					<Route path='/test2' element={<AboutUs />} />
 					<Route path='/test5' element={<NewBadge />} />
 					<Route path='/login' element={<Signin />} />
 					<Route path='/verify' element={<VerifyEmail />} />
