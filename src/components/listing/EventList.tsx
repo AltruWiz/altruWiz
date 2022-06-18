@@ -9,7 +9,9 @@ function EventList({ use, head, events }: any) {
 
 	const processDate = (data: any) => {
 		const date = new Date(data.eventDate + 'T' + data.eventTime);
-		const time = new Date(data.eventDate + 'T' + data.eventTime).toLocaleTimeString('en-US', {
+		const time = new Date(
+			data.eventDate + 'T' + data.eventTime
+		).toLocaleTimeString('en-US', {
 			hour12: true,
 			hour: 'numeric',
 			minute: 'numeric',
@@ -37,16 +39,30 @@ function EventList({ use, head, events }: any) {
 									whileTap={{ y: 0 }}
 									key={data.eventCode}
 									className='events-list-items'
-									onClick={() => navigate(`/event/${data.eventID}`)}>
-									<img src={data.eventImage}></img>
+									onClick={() => navigate(`/event/${data.eventID}`)}
+								>
+									<div className='events-list-items-image'>
+										<img src={data.eventImage} />
+									</div>
 									<div className='events-list-items-details'>
-										<h1 className='events-list-items-details-title'>{data.eventName}</h1>
-										<h1 className='events-list-items-details-date'>{processDate(data)}</h1>
+										<h1 className='events-list-items-details-title'>
+											{data.eventName}
+										</h1>
+										<h1 className='events-list-items-details-date'>
+											{processDate(data)}
+										</h1>
 
-										<h1 className='events-list-items-details-org'>{data.eventCreator}</h1>
+										<h1 className='events-list-items-details-org'>
+											{data.eventCreator}
+										</h1>
 										<div className='events-list-items-details-xp'>
-											<img src='/assets/xp-logo.svg' className='events-list-items-details-xp-icon'></img>
-											<h1 className='events-list-items-details-xp-label'>{data.expReward}</h1>
+											<img
+												src='/assets/xp-logo.svg'
+												className='events-list-items-details-xp-icon'
+											></img>
+											<h1 className='events-list-items-details-xp-label'>
+												{data.expReward}
+											</h1>
 										</div>
 									</div>
 								</motion.div>
@@ -58,18 +74,30 @@ function EventList({ use, head, events }: any) {
 									whileTap={{ y: 0 }}
 									key={data.eventCode}
 									className='events-list-items'
-									onClick={() => navigate(`/event/${data.eventID}`)}>
+									onClick={() => navigate(`/event/${data.eventID}`)}
+								>
 									<div className='events-list-items-image'>
 										<img src={data.eventImage} />
 									</div>
 									<div className='events-list-items-details'>
-										<h1 className='events-list-items-details-title'>{data.eventName}</h1>
-										<h1 className='events-list-items-details-date'>{processDate(data)}</h1>
+										<h1 className='events-list-items-details-title'>
+											{data.eventName}
+										</h1>
+										<h1 className='events-list-items-details-date'>
+											{processDate(data)}
+										</h1>
 
-										<h1 className='events-list-items-details-org'>{data.eventCreator}</h1>
+										<h1 className='events-list-items-details-org'>
+											{data.eventCreator}
+										</h1>
 										<div className='events-list-items-details-xp'>
-											<img src='/assets/xp-logo.svg' className='events-list-items-details-xp-icon'></img>
-											<h1 className='events-list-items-details-xp-label'>{data.expReward}</h1>
+											<img
+												src='/assets/xp-logo.svg'
+												className='events-list-items-details-xp-icon'
+											></img>
+											<h1 className='events-list-items-details-xp-label'>
+												{data.expReward}
+											</h1>
 										</div>
 									</div>
 								</motion.div>
@@ -79,7 +107,10 @@ function EventList({ use, head, events }: any) {
 
 			{isEnough ? (
 				<div className='events-container'>
-					<button className='events-container-button' onClick={() => setIsCompact(!isCompact)}>
+					<button
+						className='events-container-button'
+						onClick={() => setIsCompact(!isCompact)}
+					>
 						{isCompact ? 'See More' : 'See Less'}
 					</button>
 				</div>
